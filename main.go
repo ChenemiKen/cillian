@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/chenemiken/cillian/handlers"
+	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 )
 
@@ -20,9 +21,12 @@ func main() {
 		log.Fatal("PORT not set in .env")
 	}
 
-	http.HandleFunc("/", handlers.Home)
+	r := mux.NewRouter()
+
+	r.HandleFunc("/", handlers.Home).Methods("GET")
+	r.HandleFunc("/products", handlers.CreateProduct).Methods("POST")
 
 	fmt.Printf("Cillian running on port :%s \n", port)
 
-	_ = http.ListenAndServe(":"+port, nil)
+	_ = http.ListenAndServe(":"+port, r)
 }
