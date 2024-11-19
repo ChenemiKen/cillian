@@ -22,7 +22,6 @@ func Validate(s interface{}) []fieldError {
 	if err != nil {
 		fieldErrors := []fieldError{}
 		for _, err := range err.(validator.ValidationErrors) {
-			fmt.Println(err)
 			fieldName := err.Field()
 			tag := err.Tag()
 			param := err.Param()
