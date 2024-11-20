@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/chenemiken/cillian/db"
 	"github.com/chenemiken/cillian/handlers"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
@@ -19,6 +20,11 @@ func main() {
 	port, exist := os.LookupEnv("PORT")
 	if !exist {
 		log.Fatal("PORT not set in .env")
+	}
+
+	err := db.ConnectDb()
+	if err != nil {
+		log.Fatal("failed to connect to database: " + err.Error())
 	}
 
 	r := mux.NewRouter()
